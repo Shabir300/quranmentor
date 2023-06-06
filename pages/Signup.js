@@ -11,7 +11,6 @@ import Link from 'next/link';
 import Iqra from '../public/Iqra transparent.png';
 import Cropper from 'react-easy-crop';
 const inter = Inter({ subsets: ['latin'] })
-import cropEasy from '../components/crop/cropEasy';
 
 export default function Signup() {
 
