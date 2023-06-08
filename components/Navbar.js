@@ -50,7 +50,7 @@ const handleMenuClick = () => {
 
 
   return (
-    <div className='w-full font-thin text-xl border-b pt-8 pb-4 px-5 '>
+    <div className='w-full font-thin text-sm border-b pt-8 pb-4 px-5 '>
         <div className='w-full pl-3 '>
             <div className='flex flex-row justify-between items-center'>
                 <div>
@@ -90,8 +90,8 @@ const handleMenuClick = () => {
                         {/* <p>Search</p> */}
                         {/* <sl-button size="medium" variant="text" >
                         </sl-button> */}
-                        <button className=' text-[#36ac5e] border border-[#36ac5e] text-left text-lg w-fit px-3 py-1  rounded-md'>
-                            <Link className="text-[#36ac5e] text-lg" href='/CurrentProfile'>My Profile</Link>
+                        <button className=' text-[#36ac5e] border border-[#36ac5e] text-left text-lg w-fit px-1  rounded-md'>
+                            <Link className="text-[#36ac5e] text-sm" href='/CurrentProfile'>My Profile</Link>
                         </button>
 
                         {activeMenu && (

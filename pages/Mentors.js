@@ -3,23 +3,12 @@ import { collection, getDocs, onSnapshot } from 'firebase/firestore';
 import { database } from '../firebaseConfig';
 import Image from 'next/image';
 import Link from 'next/link';
-import Map from '../components/Map'
-// import { SlAvatar } from '@shoelace-style/shoelace/dist/react';
-import { Cropper } from 'react-easy-crop';
-import getCroppedImg from '../components/getCroppedImg';
-
-
-
-
 import ReactDOMServer from 'react-dom/server';
 import GoogleMapReact from 'google-map-react';
 
 
 
-
 const Mentors = () => {
-  
-  
   
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -27,10 +16,13 @@ const Mentors = () => {
   const [mapCenter, setMapCenter] = useState({ ne: 0, nw: 0, se: 0, sw: 0});
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
   const [data, setData] = useState(null)
-
+  const [name, setName] = useState('');
 
   
-  const usersLocations = users.map((user) => user.Location)
+  const usersLocations = users.map((user) => user.Location);
+  console.log(users)
+  const usersFullNames = users.map((user) => user.FullName);
+  console.log(usersFullNames)
   const [visibleUsersSet, setVisibleUsersSet] = useState(filteredUsers);
 
   useEffect(() => {
@@ -317,11 +309,15 @@ const handleMapChange = (e) => {
 
 
 
+const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2rem'}}>👳‍♂️ <p className='text-sm '>{name}</p></div>
+
+
+
 
   return (
     <div id='tutors' className="w-screen  bg-black/5 mt-10 lg:mt-28 py-28">
       <div className="w-[95%] lg:w-[80%] mx-auto">
-        <h1 className="font-thin  text-4xl xl:text-7xl xl:leading-normal  leading-tight ">
+        <h1 className="font-thin  text-2xl xl:text-7xl xl:leading-normal  leading-tight ">
         Discover Ur Perfect tutor  
           <p className="bg-black py-3 mt-2 text-white rounded-md font-thin tracking-wider px-4   ">
           Find the ideal match on the map
@@ -333,7 +329,7 @@ const handleMapChange = (e) => {
           Location-filtered Tutors
           </p> */}
 
-          <p className='font-thin text-3xl text-center opacity-70 mt-5  underline-offset-3'>
+          <p className='font-thin text-xl text-center opacity-70 mt-5  underline-offset-3'>
           Contact us  to get matched with the right tutor 
           </p>
 
@@ -343,7 +339,7 @@ const handleMapChange = (e) => {
                     className=' bg-[#36ac5e] text-white px-4 py-2 rounded-full'
                   style={{ width: 'fit-content', marginTop: '1rem' }}
                   >
-                    <a href={`mailto:shabirmuhammadkhan62@gmail.com`} className="font-thin text-2xl">
+                    <a href={`mailto:shabirmuhammadkhan62@gmail.com`} className="font-thin text-xl">
                       Email
                     </a>
 
@@ -357,7 +353,7 @@ const handleMapChange = (e) => {
                     style={{width: 'fit-content', marginTop: '1rem',}}
                   >
 
-                    <a href="" className='font-thin text-2xl'>WhatsApp</a>
+                    <a href="" className='font-thin text-xl'>WhatsApp</a>
 
                   </button>
 
@@ -368,7 +364,7 @@ const handleMapChange = (e) => {
                     style={{ width: 'fit-content', marginTop: '1rem' }}
                     
                   >
-                    <span className="font-thin text-2xl">Call</span>
+                    <span className="font-thin text-xl">Call</span>
 
                   </button>
 
@@ -387,14 +383,18 @@ const handleMapChange = (e) => {
 
               >
 
-                {usersLocations?.map((location) => (
+                {usersLocations?.map((location, index) => (
+                  
                   
                   <AnyReactComponent
                   key={location.latitude}
                   lat={location.latitude}
                   lng={location.longitude}
+                  name={usersFullNames[index]}
 
                 />
+
+                
 
                 ))}
 
@@ -515,4 +515,3 @@ const handleMapChange = (e) => {
 export default Mentors;
 
 
-const AnyReactComponent = () => <div style={{color: 'black', fontSize: '2rem'}}>👳‍♂️</div>

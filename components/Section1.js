@@ -11,7 +11,7 @@ const Section1 = () => {
 
             <div>
 
-                <h1 className='font-thin uppercase text-5xl xl:text-7xl xl:leading-normal max-w-3xl leading-tight' >
+                <h1 className='font-thin uppercase text-3xl xl:text-7xl xl:leading-normal max-w-3xl leading-tight' >
                 Discover the beauty of the Holy 
 
                 <span className='bg-[#36ac5e] text-white rounded-md font-thin tracking-wider px-4  mx-3  ' >Quran</span>
@@ -21,7 +21,7 @@ const Section1 = () => {
 
                 <p className='capitalize font-extralight text-3xl opacity-70 max-w-xl leading-tight mt-16'>Learn, Reflect, Connect</p>
 
-                <p className='font-thin max-w-md opacity-70 mt-5 text-lg'>
+                <p className='font-thin max-w-md opacity-70 mt-5 text-md'>
                     The Quran is the central religious text of Islam. This is the book of divine guidance and direction for mankind.
                 </p>
 
@@ -35,11 +35,11 @@ const Section1 = () => {
                         <Link href='/Mentors'>Search Tutors</Link>
                     </sl-button> */}
 
-            <button className='shadow-xl hover:shadow-black hover:shadow-inner   mb-5 bg-[#36ac5e] text-left text-lg  px-5 w-fit py-2 rounded-md text-white'>
+            <button className='shadow-xl hover:shadow-black hover:shadow-inner   mb-5 bg-[#36ac5e] text-left text-sm  pb-1 md:text-lg  px-5 w-fit  rounded-md text-white'>
             <Link href='/Signup'> <span className='text-xl'></span> Register</Link>
           </button>
 
-          <button className='mb-5 text-[#36ac5e] border border-[#36ac5e] text-left text-lg  px-5 w-fit py-2 rounded-md'>
+          <button className='mb-5 text-[#36ac5e] border border-[#36ac5e] text-left text-sm  md:text-lg pb-1  px-3 w-fit  rounded-md'>
             <Link href='/Signup'> <span className='text-xl'></span> Search Tutors</Link>
           </button>
                 
