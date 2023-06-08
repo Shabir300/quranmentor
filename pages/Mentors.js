@@ -319,25 +319,25 @@ const handleMapChange = (e) => {
 
 
   return (
-    <div id='tutors' className="w-screen bg-black/5 mt-28 py-28">
-      <div className="w-[80%] mx-auto">
-        <h1 className="font-thin  text-5xl xl:text-7xl xl:leading-normal  leading-tight mb-10">
-        Learn with your <span className=' underline-offset-8'>local</span> Quran 
-          <span className="bg-black text-white rounded-md font-thin tracking-wider px-4 py-0 mx-3  ">
-          tutor
-          </span>
+    <div id='tutors' className="w-screen  bg-black/5 mt-10 lg:mt-28 py-28">
+      <div className="w-[95%] lg:w-[80%] mx-auto">
+        <h1 className="font-thin  text-4xl xl:text-7xl xl:leading-normal  leading-tight ">
+        Discover Ur Perfect tutor  
+          <p className="bg-black py-3 mt-2 text-white rounded-md font-thin tracking-wider px-4   ">
+          Find the ideal match on the map
+          </p>
           <br />
         </h1>
 
-          <p className='uppercase font-thin text-2xl text-center opacity-50 '>
+          {/* <p className='uppercase font-thin text-2xl text-center opacity-50 '>
           Location-filtered Tutors
-          </p>
+          </p> */}
 
-          <p className='font-thin text-3xl text-center opacity-70 mt-5 underline underline-offset-3'>
+          <p className='font-thin text-3xl text-center opacity-70 mt-5  underline-offset-3'>
           Contact us  to get matched with the right tutor 
           </p>
 
-          <div className='flex gap-2 mx-auto w-fit mt-10 '>
+          <div className='flex gap-2 mx-auto w-fit  '>
 
                   <button
                     className=' bg-[#36ac5e] text-white px-4 py-2 rounded-full'

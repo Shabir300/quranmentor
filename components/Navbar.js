@@ -50,8 +50,8 @@ const handleMenuClick = () => {
 
 
   return (
-    <div className='w-screen font-thin text-xl border-b pt-8 pb-4 '>
-        <div className='w-full px-10 '>
+    <div className='w-full font-thin text-xl border-b pt-8 pb-4 mx-0 px-0 '>
+        <div className='w-full pl-3 '>
             <div className='flex flex-row justify-between items-center'>
                 <div>
                     <h1 className='text-[#36ac5e] font-semibold'>Quran<span className='text-black font-thin'>.tutor</span></h1>

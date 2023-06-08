@@ -55,15 +55,16 @@ const About = () => {
 
         </div>
 
-        <div>
-            <div className='px-10 max-w-[40rem] min-w-[25rem] mt-5'>
+        {/* <div>
+            <div className=' max-w-[40rem] min-w-[25rem] mt-5 px-0 mx-0'>
 
                 <Image
                     src={Iqra}
+                    alt='about image'
                 />
 
             </div>
-        </div>
+        </div> */}
 
 
     </div>
