@@ -50,7 +50,7 @@ const handleMenuClick = () => {
 
 
   return (
-    <div className='w-full font-thin text-xl border-b pt-8 pb-4 mx-0 px-0 '>
+    <div className='w-full font-thin text-xl border-b pt-8 pb-4 px-5 '>
         <div className='w-full pl-3 '>
             <div className='flex flex-row justify-between items-center'>
                 <div>
