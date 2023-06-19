@@ -94,7 +94,7 @@ const Map = ({locations, currentUserLocation}) => {
     <div style={{ height: '50vh', width: '100%' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyAjBXW20ZKr8l3fSnFCF5cvzdAP7ozOfAA' }}
-        center={currentUserLocation}
+        center={currentUserLocation ? currentUserLocation: {lat:33.636734, lng: 73.075600} }
         defaultZoom={13}
       >
         {locations?.map((location) => (
