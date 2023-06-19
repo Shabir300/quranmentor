@@ -115,4 +115,4 @@ const Map = ({locations, currentUserLocation}) => {
 
 export default Map;
 
-const AnyReactComponent = () => <div style={{color: 'black', fontSize: '2rem'}}>👳‍♂️</div>
+const AnyReactComponent = () => <div style={{color: 'black', fontSize: '2rem', position: 'absolute', transform: 'translate(-50%, -50%)'}}>👳‍♂️</div>
