@@ -310,10 +310,7 @@ const handleMapChange = (e) => {
 
 const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2rem'}}>👳‍♂️ <p className='text-sm '>{name}</p></div>
 
-const fallBackLocation = {
-  lat: 33.4915592,
-  lng: 73.0952097
-}
+
 
 const fallbackLocation = {
   lat: 40.7128, // Example: New York City latitude
@@ -386,11 +383,7 @@ const fallbackLocation = {
               bootstrapURLKeys={{ key: 'AIzaSyAjBXW20ZKr8l3fSnFCF5cvzdAP7ozOfAA' }}
               onChange={(e) => handleMapChange(e)}
               defaultCenter={center}
-<<<<<<< HEAD
               center={currentUserLocation.lat? currentUserLocation : fallbackLocation}
-=======
-              center={currentUserLocation || fallBackLocation}
->>>>>>> 0640749e0065599dea2b51286b5882a0b4eb6b1c
               defaultZoom={13}
 
               >
