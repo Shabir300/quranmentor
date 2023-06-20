@@ -9,7 +9,11 @@ import {getAuth, onAuthStateChanged, sendEmailVerification, createUserWithEmailA
 // import Map from '../components/Map';
 import Link from 'next/link';
 import Iqra from '../public/Iqra transparent.png';
-import Cropper from 'react-easy-crop';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Signup() {
@@ -32,10 +36,17 @@ export default function Signup() {
   const [about, setAbout] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [check, setCheck] = useState("")
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   
   const [openCrop, setOpenCrop] = useState(false)
   const collectionRef = collection(database, 'users')
+
+  const [crop, setCrop] = useState({
+    unit: '%', // Can be 'px' or '%'
+    x: 25,
+    y: 25,
+    width: 50,
+    height: 50
+  });
   
   // useEffect(() => {
   //   // Get user's current location
@@ -201,7 +212,7 @@ export default function Signup() {
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
     setImage(file)
-    setOpenCrop(true)
+    // setOpenCrop(true)
 
     if (file) {
       const reader = new FileReader();
@@ -265,7 +276,7 @@ export default function Signup() {
                 type='file'
                 onChange={handleFileInputChange}
                 style={{marginBottom: '1rem'}}
-              />
+                />
 
 
 

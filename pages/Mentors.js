@@ -20,10 +20,12 @@ const Mentors = () => {
 
   
   const usersLocations = users.map((user) => user.Location);
-  console.log(users)
+  // console.log(users)
   const usersFullNames = users.map((user) => user.FullName);
-  console.log(usersFullNames)
+  // console.log(usersFullNames)
   const [visibleUsersSet, setVisibleUsersSet] = useState(filteredUsers);
+
+
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
@@ -37,6 +39,8 @@ const Mentors = () => {
     return () => navigator.geolocation.clearWatch(watchId);
   }, [setCurrentUserLocation]);
   
+
+  // console.log(currentUserLocation);
   
   
   useEffect(() => {
@@ -169,7 +173,7 @@ const Mentors = () => {
 
   // userLocation.length > 0 &&
   
-  console.log(currentUserLocation)
+  // console.log(currentUserLocation)
   
   const toRadians = (degrees) => {
     return degrees * (Math.PI / 180);
@@ -194,16 +198,16 @@ const getDistanceFromLatLonInKm = (latitude1, longitude1, latitude2, longitude2)
   
 
 
-  useEffect(() => {
-    if (currentUserLocation.lat && currentUserLocation.lng && users.length > 0) {
-      const filtered = users.filter((user) => {
-        const distance = getDistanceFromLatLonInKm(user.Location.latitude, user.Location.longitude, currentUserLocation.lat, currentUserLocation.lng);
-        return distance < 10;
-      });
-      setFilteredUsers(filtered);
-      console.log(filtered)
-    }
-  }, [currentUserLocation, users ]);
+  // useEffect(() => {
+  //   if (currentUserLocation.lat && currentUserLocation.lng && users.length > 0) {
+  //     const filtered = users.filter((user) => {
+  //       const distance = getDistanceFromLatLonInKm(user.Location.latitude, user.Location.longitude, currentUserLocation.lat, currentUserLocation.lng);
+  //       return distance < 10;
+  //     });
+  //     setFilteredUsers(filtered);
+  //     // console.log(filtered)
+  //   }
+  // }, [currentUserLocation, users ]);
 
 
   // useEffect(() => {
@@ -247,8 +251,6 @@ const getDistanceFromLatLonInKm = (latitude1, longitude1, latitude2, longitude2)
   // }, [mapCenter, users]);
   
 
-console.log(filteredUsers)
-  console.log(mapCenter)
   
 
   // const usersLocations = filteredUsers.map((user) => user.Location);
@@ -257,11 +259,8 @@ console.log(filteredUsers)
 
   // usersLocations.map((location) => setUserLocation(location))
 
-  console.log(users)
 // console.log(userLocation)
-  console.log(usersLocations)
 
-console.log(filteredUsers)
 
 
   const makeCall = (phoneNumber) => {
@@ -311,6 +310,12 @@ const handleMapChange = (e) => {
 
 const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2rem'}}>👳‍♂️ <p className='text-sm '>{name}</p></div>
 
+
+
+const fallbackLocation = {
+  lat: 40.7128, // Example: New York City latitude
+  lng: -74.0060 // Example: New York City longitude
+};
 
 
 
@@ -378,7 +383,7 @@ const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2r
               bootstrapURLKeys={{ key: 'AIzaSyAjBXW20ZKr8l3fSnFCF5cvzdAP7ozOfAA' }}
               onChange={(e) => handleMapChange(e)}
               defaultCenter={center}
-              center={currentUserLocation}
+              center={currentUserLocation.lat? currentUserLocation : fallbackLocation}
               defaultZoom={13}
 
               >
@@ -440,7 +445,7 @@ const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2r
                   should match the user with the right tutor */}
 
           
-                {/* <div className='flex gap-2 '>
+                <div className='flex gap-2 '>
 
                   <button
                     className=' bg-[#36ac5e] text-white px-3 py-1 rounded-full'
@@ -475,7 +480,7 @@ const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2r
 
                   </button>
 
-                </div> */}
+                </div>
 
 
                 </div>
