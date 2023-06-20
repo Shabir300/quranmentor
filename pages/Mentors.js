@@ -396,7 +396,6 @@ const fallbackLocation = {
                   lat={location.latitude}
                   lng={location.longitude}
                   name={usersFullNames[index]}
-
                 />
 
                 
