@@ -5,6 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ReactDOMServer from 'react-dom/server';
 import GoogleMapReact from 'google-map-react';
+import { FiPhoneCall } from 'react-icons/fi';
+import { MdEmail } from 'react-icons/md';
+import { FaWhatsapp } from 'react-icons/fa';
 
 
 
@@ -12,11 +15,12 @@ const Mentors = () => {
   
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [currentUserLocation, setCurrentUserLocation] = useState({});
+  const [currentUserLocation, setCurrentUserLocation] = useState({lat: null, lng: null});
   const [mapCenter, setMapCenter] = useState({ ne: 0, nw: 0, se: 0, sw: 0});
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
   const [data, setData] = useState(null)
   const [name, setName] = useState('');
+  const [flag,setFlag] = useState(false);
 
   
   const usersLocations = users.map((user) => user.Location);
@@ -31,13 +35,15 @@ const Mentors = () => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
+        console.log("location", latitude, longitude)
         setCurrentUserLocation({ lat: latitude, lng: longitude });
+        setFlag(true);
       },
       (error) => console.log(error),
       { enableHighAccuracy: true }
     );
     return () => navigator.geolocation.clearWatch(watchId);
-  }, [setCurrentUserLocation]);
+  }, []);
   
 
   // console.log(currentUserLocation);
@@ -232,7 +238,7 @@ const getDistanceFromLatLonInKm = (latitude1, longitude1, latitude2, longitude2)
       setFilteredUsers(filtered);
       console.log(filtered)
     }
-  }, [mapCenter, users ]);
+  }, [mapCenter, users, currentUserLocation ]);
   
 
   // useEffect(() => {
@@ -385,7 +391,7 @@ console.log(currentUserLocation);
               bootstrapURLKeys={{ key: 'AIzaSyAjBXW20ZKr8l3fSnFCF5cvzdAP7ozOfAA' }}
               onChange={(e) => handleMapChange(e)}
               defaultCenter={center}
-              center={currentUserLocation.lat ? currentUserLocation : fallbackLocation}
+              center={flag ? currentUserLocation : fallbackLocation}
               defaultZoom={13}
               >
 
@@ -408,7 +414,7 @@ console.log(currentUserLocation);
             </div>
 
 
-        <ul className="flex flex-col gap-12 mt-24 max-h-[50vh] overflow-y-scroll">
+        <ul className="flex flex-col gap-1 mt-24 max-h-[50vh] overflow-y-scroll">
 
 
           {visibleUsersSet.map((user) => (
@@ -416,13 +422,13 @@ console.log(currentUserLocation);
 
             <li
               key={user.email}
-              className="flex flex-row gap-5 border-b border-black/20 pb-4"
+              className="flex flex-row items-center gap-5 border-b border-black/20  pl-4"
             >
               
               <img
                 src={user.ProfilePic}
                 alt="Profile Pic"
-                className="rounded-full w-20 h-20"
+                className="rounded-full h-20 w-20"
                 />
 
             {/* <sl-avatar
@@ -447,11 +453,11 @@ console.log(currentUserLocation);
                 <div className='flex gap-2 '>
 
                   <button
-                    className=' bg-[#36ac5e] text-white px-3 py-1 rounded-full'
+                    className='  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
                   style={{ width: 'fit-content', marginTop: '1rem' }}
                   >
                     <a href={`mailto:${user.Email}`} className="font-thin text-lg">
-                      Email
+                      <MdEmail  />
                     </a>
 
                   </button>
@@ -459,23 +465,23 @@ console.log(currentUserLocation);
                   
 
                   <button
-                    className=' bg-[#36ac5e] text-white px-3 py-1 rounded-full'
+                    className='  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
                     onClick={() => sendWhatsappMessage(user.Phone)}
                     style={{width: 'fit-content', marginTop: '1rem',}}
                   >
 
-                    <a href="" className='font-thin text-lg'>WhatsApp</a>
+                    <a href="" className='font-thin text-lg'><FaWhatsapp /></a>
 
                   </button>
 
                   
                   <button
-                    className=' bg-[#36ac5e] text-white px-3 py-1 rounded-full'
+                    className='  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
                     onClick={() => makeCall(user.Phone)}
                     style={{ width: 'fit-content', marginTop: '1rem' }}
                     
                   >
-                    <span className="font-thin text-lg">Call</span>
+                    <span className="font-thin text-lg"><FiPhoneCall  /></span>
 
                   </button>
 
