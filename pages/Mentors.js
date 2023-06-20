@@ -319,6 +319,8 @@ const fallbackLocation = {
 
 
 
+console.log(currentUserLocation);
+
   return (
     <div id='tutors' className="w-screen  bg-black/5 mt-10 lg:mt-28 py-28">
       <div className="w-[95%] lg:w-[80%] mx-auto">
@@ -383,13 +385,11 @@ const fallbackLocation = {
               bootstrapURLKeys={{ key: 'AIzaSyAjBXW20ZKr8l3fSnFCF5cvzdAP7ozOfAA' }}
               onChange={(e) => handleMapChange(e)}
               defaultCenter={center}
-              center={currentUserLocation.lat? currentUserLocation : fallbackLocation}
+              center={currentUserLocation.lat ? currentUserLocation : fallbackLocation}
               defaultZoom={13}
-
               >
 
                 {usersLocations?.map((location, index) => (
-                  
                   
                   <AnyReactComponent
                   key={location.latitude}
