@@ -11,14 +11,14 @@ import Link from 'next/link';
 import Iqra from '../public/Iqra transparent.png';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-
+import { useRouter } from 'next/router';
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Signup() {
 
-
+  const router = useRouter();
   const auth = getAuth();
   
   const [fullName, setFullName] = useState('');
@@ -131,7 +131,6 @@ export default function Signup() {
 
   }
 
-  console.log(image)
 
   const handleSignUp = () => {
 
@@ -141,6 +140,7 @@ export default function Signup() {
       console.log("User Signed Up!");
       alert("Account Successfully Created!");
       setMes("Account Successfully Created!");
+      router.push('/SignIn')
       setTimeout(() => {
         setMes("");
       }, 2000);
@@ -263,7 +263,7 @@ export default function Signup() {
                         <Link  href='/'>Back Home</Link>
           </sl-button> */}
 
-          <h2 className='font-thin uppercase text-5xl xl:text-7xl xl:leading-normal max-w-3xl leading-tight'>Create an account</h2>
+          <h2 className='font-thin uppercase text-5xl xl:text-7xl xl:leading-normal max-w-3xl leading-tight'>Create an account</h2> <span className='italic'>Only for teachers</span>
           
           <div className='flex flex-col gap-4 mt-12'>
 
@@ -323,7 +323,7 @@ export default function Signup() {
 
           <input
             className='mb-7 border-b border-black/30 pb-2 px-1 lg:mr-24 text-xl'
-            placeholder='+92-123-4567890'
+            placeholder='03XX-XXXXXXX'
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />

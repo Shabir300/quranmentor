@@ -17,6 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/material": "^5.13.3",
+    "@reduxjs/toolkit": "^1.9.5",
     "copy-webpack-plugin": "^11.0.0",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
@@ -30,6 +31,7 @@
     "react-easy-crop": "^4.7.4",
     "react-icons": "^4.9.0",
     "react-image-crop": "^10.1.4",
+    "react-redux": "^8.1.1",
     "react-router-dom": "^6.10.0",
     "react-scroll": "^1.8.9"
   },

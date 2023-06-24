@@ -8,10 +8,15 @@ import GoogleMapReact from 'google-map-react';
 import { FiPhoneCall } from 'react-icons/fi';
 import { MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
-
-
+import {createSlice} from '@reduxjs/toolkit';
+import { updateVisibleUsersSet } from '../app/tutorsSlice';
+import {useDispatch, useSelector} from 'react-redux'
 
 const Mentors = () => {
+
+  const dispatch = useDispatch();
+  const teachers = useSelector(state => state.tutors);
+
   
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -21,14 +26,24 @@ const Mentors = () => {
   const [data, setData] = useState(null)
   const [name, setName] = useState('');
   const [flag,setFlag] = useState(false);
-
+  
   
   const usersLocations = users.map((user) => user.Location);
   // console.log(users)
   const usersFullNames = users.map((user) => user.FullName);
+  const usersWhatsapp = users.map((user) => user.Phone);
+  const usersEmails = users.map((user) => user.Email);
+  const usersHeadlines = users.map((user) => user.Headline)
+  
   // console.log(usersFullNames)
   const [visibleUsersSet, setVisibleUsersSet] = useState(filteredUsers);
+  
+  
+  useEffect(() => {
 
+    console.log(teachers)
+
+  }, [setVisibleUsersSet, visibleUsersSet])
 
 
   useEffect(() => {
@@ -306,16 +321,86 @@ const handleMapChange = (e) => {
       latLng.latitude <= bounds.ne.lat &&
       latLng.longitude >= bounds.sw.lng &&
       latLng.longitude <= bounds.ne.lng
-    );
-  });
-
+      );
+    });
+  
   setVisibleUsersSet(visibleUsers);
+  dispatch(updateVisibleUsersSet());
+
 };
 
 
 
-const AnyReactComponent = ({name}) => <div style={{color: 'black', fontSize: '2rem'}}>👳‍♂️ <p className='text-sm '>{name}</p></div>
 
+
+
+const AnyReactComponent = ({ name, phone, email, headline }) => {
+  const [hovered, setHovered] = useState(false)
+  
+  const handleMouseEnter = () => {
+    setHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setHovered(false)
+  }
+
+  return (
+    <div
+    className='relative'
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}
+    >
+      <div style={{fontSize: '2rem'}}>👳‍♂️</div>
+      {hovered &&  (
+        <div className='absolute bg-white text-color p-2 rounded-md shadow'>
+            <p className='text-sm'>{name}</p>
+            <span className='text-xs opacity-70'>{headline}</span>
+            
+              <div className='flex gap-2 '>
+
+              <button
+                className=' h-fit w-fit text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
+                style={{ width: 'fit-content', marginTop: '1rem' }}
+                >
+                <a href={`mailto:${email}`} className="font-thin text-lg">
+                  <MdEmail  />
+                </a>
+
+              </button>
+
+              
+
+              <button
+                className=' h-fit w-fit text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
+                onClick={() => sendWhatsappMessage(phone)}
+                style={{width: 'fit-content', marginTop: '1rem',}}
+                >
+
+                <a href="" className='font-thin text-lg'><FaWhatsapp /></a>
+
+              </button>
+
+              
+              {/* <button
+                className='h-fit w-fit  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
+                onClick={() => makeCall(user.Phone)}
+                style={{ width: 'fit-content', marginTop: '1rem' }}
+                
+                >
+                <span className="font-thin text-lg"><FiPhoneCall  /></span>
+
+              </button> */}
+
+            </div>
+            
+
+
+        </div>
+      )}
+    </div>
+  )
+}
 
 
 const fallbackLocation = {
@@ -327,8 +412,8 @@ const fallbackLocation = {
 
 console.log(currentUserLocation);
 
-  return (
-    <div id='tutors' className="w-screen  bg-black/5 mt-10 lg:mt-28 py-28">
+return (
+  <div id='tutors' className="w-screen  bg-black/5 mt-10 lg:mt-28 py-28">
       <div className="w-[95%] lg:w-[80%] mx-auto">
         <h1 className="font-thin  text-2xl xl:text-7xl xl:leading-normal  leading-tight ">
         Discover Ur Perfect tutor  
@@ -350,8 +435,8 @@ console.log(currentUserLocation);
 
                   <button
                     className=' bg-[#36ac5e] text-white px-4 py-2 rounded-full'
-                  style={{ width: 'fit-content', marginTop: '1rem' }}
-                  >
+                    style={{ width: 'fit-content', marginTop: '1rem' }}
+                    >
                     <a href={`mailto:shabirmuhammadkhan62@gmail.com`} className="font-thin text-xl">
                       Email
                     </a>
@@ -364,7 +449,7 @@ console.log(currentUserLocation);
                     className=' bg-[#36ac5e] text-white px-4 py-2 rounded-full'
                     onClick={() => sendWhatsappMessage('+923233937310')}
                     style={{width: 'fit-content', marginTop: '1rem',}}
-                  >
+                    >
 
                     <a href="" className='font-thin text-xl'>WhatsApp</a>
 
@@ -376,7 +461,7 @@ console.log(currentUserLocation);
                     onClick={() => makeCall('+9233937310')}
                     style={{ width: 'fit-content', marginTop: '1rem' }}
                     
-                  >
+                    >
                     <span className="font-thin text-xl">Call</span>
 
                   </button>
@@ -402,11 +487,14 @@ console.log(currentUserLocation);
                   lat={location.latitude}
                   lng={location.longitude}
                   name={usersFullNames[index]}
-                />
-
-                
-
-                ))}
+                  phone={usersWhatsapp[index]}
+                  email={usersEmails[index]}
+                  headline={usersHeadlines[index]}
+                  />
+                  
+                  
+                  
+                  ))}
 
               </GoogleMapReact>
 
@@ -414,107 +502,8 @@ console.log(currentUserLocation);
             </div>
 
 
-        <ul className="flex flex-col gap-1 mt-24 max-h-[50vh] overflow-y-scroll">
-
-
-          {visibleUsersSet.map((user) => (
-
-
-            <li
-              key={user.email}
-              className="flex flex-row items-center gap-5 border-b border-black/20  pl-4"
-            >
-              
-              <img
-                src={user.ProfilePic}
-                alt="Profile Pic"
-                className="rounded-full h-20 w-20"
-                />
-
-            {/* <sl-avatar
-                image={user.ProfilePic}
-                label="Teacher"
-              ></sl-avatar> */}
-
-              <div className="flex flex-col w-full ">
-                <div className='flex flex-row justify-between mr-5'>
-
-                  <Link href='/teacher'>
-                    <div className='mr-16'>
-                      <p className="font-[georgia]  text-2xl">{user.FullName}</p>
-                      <p className="font-helvetica  text-lg">{user.Headline}</p>
-                    </div>
-                  </Link>
-                  
- {/* No email call or whatsapp buttons because the platform
-                  should match the user with the right tutor */}
-
-          
-                <div className='flex gap-2 '>
-
-                  <button
-                    className='  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
-                  style={{ width: 'fit-content', marginTop: '1rem' }}
-                  >
-                    <a href={`mailto:${user.Email}`} className="font-thin text-lg">
-                      <MdEmail  />
-                    </a>
-
-                  </button>
-
-                  
-
-                  <button
-                    className='  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
-                    onClick={() => sendWhatsappMessage(user.Phone)}
-                    style={{width: 'fit-content', marginTop: '1rem',}}
-                  >
-
-                    <a href="" className='font-thin text-lg'><FaWhatsapp /></a>
-
-                  </button>
-
-                  
-                  <button
-                    className='  text-[#36ac5e] border border-[#36ac5e] px-3 py-1 rounded-full'
-                    onClick={() => makeCall(user.Phone)}
-                    style={{ width: 'fit-content', marginTop: '1rem' }}
-                    
-                  >
-                    <span className="font-thin text-lg"><FiPhoneCall  /></span>
-
-                  </button>
-
-                </div>
-
-
-                </div>
-                <p className="font-thin text-md mt-2 ">{user.About}</p>
-
-                  
-                <div className="flex flex-row gap-4">
-
-
-                </div>
-
-              </div>
-            </li>
-          ))}
-        </ul>
-
-
-
-
-
         
 
-
-
-
-
-
-
-        
         {/* <Map onCenterChanged={handlesetMapCenter} locations={usersLocations} currentUserLocation={currentUserLocation} /> */}
       
       </div>
@@ -522,6 +511,5 @@ console.log(currentUserLocation);
   );
 };
 
+
 export default Mentors;
-
-

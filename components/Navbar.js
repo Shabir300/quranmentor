@@ -91,7 +91,7 @@ const handleMenuClick = () => {
                         {/* <sl-button size="medium" variant="text" >
                         </sl-button> */}
                         <button className=' text-[#36ac5e] border border-[#36ac5e] text-left text-lg w-fit px-1  rounded-md'>
-                            <Link className="text-[#36ac5e] text-sm" href='/CurrentProfile'>My Profile</Link>
+                            <Link className="text-[#36ac5e] text-sm" href='/CurrentProfile'>Teacher Profile</Link>
                         </button>
 
                         {activeMenu && (

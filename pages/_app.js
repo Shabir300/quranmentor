@@ -1,14 +1,16 @@
 import '../styles/globals.css'
 // import '@shoelace-style/shoelace/dist/themes/light.css';
 // import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path';
-
+import store from '../app/store'
+import { Provider } from 'react-redux';
 
 function MyApp({ Component, pageProps }) {
   const isBrowser = typeof window !== 'undefined';
   return (
     <>
-      
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </>
   )
 }

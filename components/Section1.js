@@ -36,11 +36,11 @@ const Section1 = () => {
                     </sl-button> */}
 
             <button className='shadow-xl hover:shadow-black hover:shadow-inner   mb-5 bg-[#36ac5e] text-left text-sm  pb-1 md:text-lg  px-5 w-fit  rounded-md text-white'>
-            <Link href='/Signup'> <span className='text-xl'></span> Register</Link>
+            <Link href='/Signup'> <span className='text-xl'></span> Register <p className='italic text-md font-extralight'>As a teacher</p></Link>
           </button>
 
           <button className='mb-5 text-[#36ac5e] border border-[#36ac5e] text-left text-sm  md:text-lg pb-1  px-3 w-fit  rounded-md'>
-            <Link href='/Signup'> <span className='text-xl'></span> Search Tutors</Link>
+            <Link href='#tutors'> <span className='text-xl'></span> Search Tutors</Link>
           </button>
                 
                 </div>
