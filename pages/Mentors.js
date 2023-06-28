@@ -473,7 +473,7 @@ return (
             <div className='mt-10' style={{ height: '50vh', width: '100%' }}>
 
               <GoogleMapReact
-              bootstrapURLKeys={{ key: 'AIzaSyAjBXW20ZKr8l3fSnFCF5cvzdAP7ozOfAA' }}
+              bootstrapURLKeys={{ key: 'AIzaSyAUUQdVUhJY2tAMoKBoXWPz_DcfJZwdXUo' }}
               onChange={(e) => handleMapChange(e)}
               defaultCenter={center}
               center={flag ? currentUserLocation : fallbackLocation}
