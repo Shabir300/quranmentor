@@ -12,7 +12,7 @@ import Iqra from '../public/Iqra transparent.png';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRouter } from 'next/router';
-
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +20,7 @@ export default function Signup() {
 
   const router = useRouter();
   const auth = getAuth();
-  
+  const [showPassword, setShowPassword] = useState(false)
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); 
@@ -35,7 +35,8 @@ export default function Signup() {
   const [text, setText] = useState("");
   const [about, setAbout] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
-  const [check, setCheck] = useState("")
+  const [check, setCheck] = useState("");
+  const [disabled,setDisabled] = useState(false)
   
   const [openCrop, setOpenCrop] = useState(false)
   const collectionRef = collection(database, 'users')
@@ -174,6 +175,7 @@ export default function Signup() {
 
     handleSignUp();
     handleAddDoc();
+    setDisabled(true)
     
   }
 
@@ -310,12 +312,26 @@ export default function Signup() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             />
-          <input
-            className='mb-7 border-b border-black/30 pb-2 px-1 lg:mr-24 text-xl'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          
+          <div className='flex '>
+
+              <input
+                className='mb-7 flex-1 -mr-4 border-b border-black/30 pb-2 px-1 lg:mr-24 text-xl'
+                placeholder='Password'
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                
+                />
+
+              {showPassword ? (
+                <RiEyeOffFill onClick={() => setShowPassword(false)}/>
+              ): (
+                <RiEyeFill onClick={() => setShowPassword(true)} />
+                )}
+
+            </div>
+
 
           {/* <label 
           className='mb-7 border-b border-black/30 pb-2 px-1 lg:mr-24 text-xl'
@@ -329,14 +345,14 @@ export default function Signup() {
           />
 
           
-                <textarea
+                {/* <textarea
                   id="textarea"
                   className='mb-7 border px-1 h-[5rem] rounded-md pt-1 border-black/30  lg:mr-24 text-md md:text-lg'
                   placeholder='About '
                   name="About"
                   value={about}
                   onChange={(event) => setAbout(event.target.value)}
-                />
+                /> */}
           
 
           <label htmlFor="gender" className='text-xl mb-4 opacity-90'>Select Gender:</label>
@@ -358,7 +374,7 @@ export default function Signup() {
           <a className='text-2xl  font-thin '>Create Account</a>
           </sl-button> */}
 
-          <button onClick={handleBoth} className='max-w-[30rem] shadow-xl hover:shadow-slate-400 bg-[#36ac5e] text-white text-xl md:text-3xl py-5'>
+          <button disabled={disabled} onClick={handleBoth} className='max-w-[30rem] shadow-xl hover:shadow-slate-400 bg-[#36ac5e] text-white text-xl md:text-3xl py-5'>
             Create Account
           </button>
 

@@ -28,11 +28,11 @@ const Footer = () => {
           <p>The Holy Qur'an is the central religious text of Islam</p>
         </div>
 
-        <div className='flex gap-4'>
+        {/* <div className='flex gap-4'>
           <a href='/'>Twitter</a>
           <a href='/'>Whatsapp</a>
           <a href='/'>Instagram</a>
-        </div>
+        </div> */}
 
         <p className='text-xl'>+92 323-3937310</p>
 
@@ -41,7 +41,7 @@ const Footer = () => {
       <div className='flex flex-row gap-10'>
 
 
-      <div className='mt-10'>
+      {/* <div className='mt-10'>
         <ul className='flex flex-col gap-2'>
           <li className='mb-5'><a className='font-semibold text-xl' href='/'>About Us</a></li>
           <li><a href='/'>Our mission</a></li>
@@ -60,7 +60,7 @@ const Footer = () => {
           <li><a href='/'>Search Tutors</a></li>
 
         </ul>
-      </div>
+      </div> */}
 
       </div>
 </div>
