@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { database, storage } from '../firebaseConfig';
@@ -9,15 +9,18 @@ import {getAuth, onAuthStateChanged, sendEmailVerification, createUserWithEmailA
 // import Map from '../components/Map';
 import Link from 'next/link';
 import Iqra from '../public/Iqra transparent.png';
-import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRouter } from 'next/router';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Signup() {
-
+  const imgRef = useRef();
   const router = useRouter();
   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false)
@@ -26,8 +29,8 @@ export default function Signup() {
   const [password, setPassword] = useState(''); 
   const [gender, setGender] = useState('')
   const [mes, setMes] = useState('')
-  const [image, setImage] = useState({})
-  const [picUrl, setPicUrl] = useState('')
+  // const [image, setImage] = useState({})
+  // const [picUrl, setPicUrl] = useState('')
   const [phone, setPhone] = useState("")
   const [id, setId] = useState('')
   const [headline, setHeadline] = useState("");
@@ -36,18 +39,26 @@ export default function Signup() {
   const [about, setAbout] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [check, setCheck] = useState("");
-  const [disabled,setDisabled] = useState(false)
+  const [disabled,setDisabled] = useState(false);
+  const [photoUploadCheck, setPhotoUploadCheck] = useState('');
+
+
+  const [crop, setCrop] = useState();
+  const [imgSrc, setImgSrc] = useState('');
+  const [croppedImgSrc, setCroppedImgSrc] = useState('');
+  const [completedCrop, setCompletedCrop] = useState();
+  const [aspect, setAspect] = useState(1);
   
-  const [openCrop, setOpenCrop] = useState(false)
+  // const [openCrop, setOpenCrop] = useState(false)
   const collectionRef = collection(database, 'users')
 
-  const [crop, setCrop] = useState({
-    unit: '%', // Can be 'px' or '%'
-    x: 25,
-    y: 25,
-    width: 50,
-    height: 50
-  });
+//   const [crop, setCrop] = useState({
+//     unit: '%',
+//     x: 25,
+//     y: 25,
+//     width: 50,
+//     height: 50
+// });
   
   // useEffect(() => {
   //   // Get user's current location
@@ -76,7 +87,7 @@ export default function Signup() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        console.log(user)
+        // console.log(user)
       } else {
         setCurrentUser(null);
       }
@@ -92,7 +103,7 @@ export default function Signup() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        console.log(user)
+        // console.log(user)
       } else {
         setCurrentUser(null);
       }
@@ -106,7 +117,7 @@ export default function Signup() {
 
     addDoc(collectionRef, {
       FullName: fullName,
-      ProfilePic: picUrl,
+      ProfilePic: croppedImgSrc,
       Headline: headline,
       Email: email,
       // Age: age,
@@ -120,9 +131,9 @@ export default function Signup() {
 
     })
     .then((res) => {
-      console.log("UserData Added!")
-      console.log(res);
-      console.log(center)
+      // console.log("UserData Added!")
+      // console.log(res);
+      // console.log(center)
       setId(res.id)
     })
     .catch((err) => {
@@ -138,7 +149,7 @@ export default function Signup() {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log("User Signed Up!");
+      // console.log("User Signed Up!");
       alert("Account Successfully Created!");
       setMes("Account Successfully Created!");
       router.push('/SignIn')
@@ -180,65 +191,111 @@ export default function Signup() {
   }
 
 
+  
+  
+  // const [selectedFile, setSelectedFile] = useState(null);
+  // const [previewUrl, setPreviewUrl] = useState('');
+
+  
+  // const handleFileInputChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setImage(file)
+    
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setPreviewUrl(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  
+  
+  const onPhotoSelection = (e) => {
+    
+    if (e.target.files && e.target.files > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0])
+      reader.addEventListener('load', () => {
+        setImgSrc(reader.result.toString() || '')
+      })
+    }
+  }
+  
+  console.log(imgSrc);
+
+  const onImgLoading = () => {
+    setCrop({
+      unit: 'px',
+      width: 150,
+      height: 150,
+    })
+  }
+  
+
   const handleSubmitPic = () => {
+
+    if (completedCrop && imgRef.current) {
+      const canvas = document.createElement('canvas');
+      const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
+      const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = completedCrop.width;
+      canvas.height = completedCrop.height;
+
+      ctx.drawImage(
+        imgRef.current,
+        completedCrop.x * scaleX,
+        completedCrop.y * scaleY,
+        completedCrop.width * scaleX,
+        completedCrop.height * scaleY,
+        0,
+        0,
+        completedCrop.width,
+        completedCrop.height
+      );
+
+      const base64Image = canvas.toDataURL('image/jpeg');
+      setCroppedImgSrc(base64Image);
+
+    }
+
+  console.log(croppedImgSrc)
+
     // if (!image || !image.name || !email) {
     //   console.log('Invalid input: image and email are required');
     //   return;
     // }
   
-    const storageRef = ref(storage, `images/${email}/${image.name}`)
-    const uploadTask = uploadBytesResumable(storageRef, image);
-      uploadTask.on("state_changed", (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes ) * 100
-          console.log('Upload is' + progress + '% done');
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File availabe at", downloadURL)
-          setPicUrl(downloadURL)
-          setCheck("✓")
-        })
-      }
-      )
+    // const storageRef = ref(storage, `images/${email}/${image.name}`)
+    // const uploadTask = uploadBytesResumable(storageRef, image);
+    //   uploadTask.on("state_changed", (snapshot) => {
+    //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes ) * 100
+    //       // console.log('Upload is' + progress + '% done');
+    //       setPhotoUploadCheck('Upload is' + progress + '% done')
+    //   },
+    //   (error) => {
+    //     console.log(error.message);
+    //   },
+    //   () => {
+    //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //       // console.log("File availabe at", downloadURL)
+    //       setPicUrl(downloadURL)
+    //       setCheck("✓")
+    //     })
+    //   }
+    //   )
 
   }
-
-
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState('');
-
   
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    setImage(file)
-    // setOpenCrop(true)
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-
- 
-
-
-
+  
   // const storageRef = ref(storage, 'images/' + email + '/' + image.name);
-
-
+  
+  
   return (
-    !openCrop ? (
-
       <>
 
-    
     <main id='register' className='font-thin' style={{height: '100vh', width: '100%'}}>
       {/* <h1>Quran Mentorship</h1> */}
 
@@ -271,22 +328,41 @@ export default function Signup() {
 
             <p className='text-2xl opacity-70'>Profile Picture</p>
 
-            <div className='flex flex-col md:flex-row'>
+            <div className='flex flex-col '>
 
+              <input type='file' accept='images/*' onChange={e => onPhotoSelection(e)} />
 
-              <input
-                type='file'
-                onChange={handleFileInputChange}
-                style={{marginBottom: '1rem'}}
+              {!!imgSrc && (
+            <div className='fixed top-10 left-10 w-full h-full'>
+              <ReactCrop
+                crop={crop}
+                onImageLoaded={onImgLoading}
+                aspect={aspect}
+                onChange={(_, percentCrop) => setCrop(percentCrop) }
+                onComplete={(c) => setCompletedCrop(c)}
+              >
+                <img
+                
+                src={imgSrc}
+                ref={imgRef}
+                alt='selected img'
+                
                 />
 
-
+              </ReactCrop>
+            </div>
+            )}
 
               <button 
               className='border shadow-md hover:shadow-slate-400 rounded-lg py-1 px-3 border-black/30 '
               style={{marginBottom: '1rem'}} 
-              onClick={handleSubmitPic}>Click to Upload
+              onClick={handleSubmitPic}> Upload
               </button>
+
+              {!!croppedImgSrc && <img src={croppedImgSrc} alt='cropped image' />}
+
+
+              <p>{photoUploadCheck}</p>
 
               <div className='ml-5 text-xl text-[#36ac5e] font-bold'>{check}</div>
 
@@ -397,8 +473,6 @@ export default function Signup() {
     </main>
 
 </>
-): (
-  <cropEasy photoUrl={picUrl} />
-)
+
   )
 }

@@ -33,24 +33,25 @@ const Mentors = () => {
   const usersFullNames = users.map((user) => user.FullName);
   const usersWhatsapp = users.map((user) => user.Phone);
   const usersEmails = users.map((user) => user.Email);
-  const usersHeadlines = users.map((user) => user.Headline)
+  const usersHeadlines = users.map((user) => user.Headline);
+  const usersPhotos = users.map((user) => user.ProfilePic)
   
   // console.log(usersFullNames)
   const [visibleUsersSet, setVisibleUsersSet] = useState(filteredUsers);
   
   
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log(teachers)
+  //   console.log(teachers)
 
-  }, [setVisibleUsersSet, visibleUsersSet])
+  // }, [setVisibleUsersSet, visibleUsersSet])
 
 
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        console.log("location", latitude, longitude)
+        // console.log("location", latitude, longitude)
         setCurrentUserLocation({ lat: latitude, lng: longitude });
         setFlag(true);
       },
@@ -334,7 +335,7 @@ const handleMapChange = (e) => {
 
 
 
-const AnyReactComponent = ({ name, phone, email, headline }) => {
+const AnyReactComponent = ({ name, phone, email, headline, photo }) => {
   const [hovered, setHovered] = useState(false)
   
   const handleMouseEnter = () => {
@@ -350,12 +351,19 @@ const AnyReactComponent = ({ name, phone, email, headline }) => {
     className='relative'
     onMouseEnter={handleMouseEnter}
     onMouseLeave={handleMouseLeave}
+    onClick={handleMouseEnter}
     >
       <div style={{fontSize: '2rem'}}>👳‍♂️</div>
       {hovered &&  (
         <div className='absolute bg-white text-color p-2 rounded-md shadow'>
-            <p className='text-sm'>{name}</p>
-            <span className='text-xs opacity-70'>{headline}</span>
+          <div className='flex gap-2'>
+            {photo && <img alt='profile pic' className='w-14 h-14 rounded-full' src={photo} />}
+            <div>
+              <p className='text-sm'>{name}</p>
+              <span className='text-xs opacity-70'>{headline}</span>
+            </div>
+
+          </div>
             
               <div className='flex gap-2 '>
 
@@ -410,7 +418,7 @@ const fallbackLocation = {
 
 
 
-console.log(currentUserLocation);
+// console.log(currentUserLocation);
 
 return (
   <div id='tutors' className="w-screen  bg-black/5 mt-10 lg:mt-28 py-28">
@@ -490,6 +498,7 @@ return (
                   phone={usersWhatsapp[index]}
                   email={usersEmails[index]}
                   headline={usersHeadlines[index]}
+                  photo={usersPhotos[index]}
                   />
                   
                   
