@@ -293,16 +293,20 @@ const getDistanceFromLatLonInKm = (latitude1, longitude1, latitude2, longitude2)
   const sendWhatsappMessage = (phoneNumber) => {
     let url = '';
 
+    let numberString = phoneNumber.toString();
+    let resultString = numberString.slice(1);
+    let resultNumber = parseInt(resultString);
+
     const message = 'Assalamualaikum Warahmatullahi Wabarakatuh! I would like to connect with you about Quran tutoring.';
   
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
     if (isMobileDevice) {
       // Open the WhatsApp app on mobile devices
-      url = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+      url = `whatsapp://send?phone=${resultNumber}&text=${encodeURIComponent(message)}`;
     } else {
       // Open WhatsApp Web on desktop/laptop computers
-      url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+      url = `https://api.whatsapp.com/send?phone=${resultNumber}&text=${encodeURIComponent(message)}`;
     }
   
     window.open(url, "_blank");

@@ -415,7 +415,7 @@ export default function Signup() {
 
           <input
             className='mb-7 border-b border-black/30 pb-2 px-1 lg:mr-24 text-xl'
-            placeholder='03XX-XXXXXXX'
+            placeholder='+923xx-xxxxxxx'
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
